@@ -26,7 +26,7 @@ export const parseBlogGitlabRequest = (page: PageParams): BlogGitlabRequest => {
 	const request: BlogGitlabRequest = {
 		project,
 		path: "",
-		ref: null,
+		ref: "HEAD",
 		type: "tree",
 	};
 

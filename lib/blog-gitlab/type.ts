@@ -8,7 +8,7 @@ export interface BlogGitlabRequest extends BlogRequestBase {
 	project: string;
 	/** path to resource, "" when at repo root */
 	path: string;
-	/** The name of branch, tag or commit */
-	ref: string | null;
+	/** The name of branch, tag or commit, HEAD when none defined */
+	ref: string;
 	type: "tree" | "blob";
 }

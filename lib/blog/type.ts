@@ -41,12 +41,3 @@ export interface BlogRequest extends BlogRequestBase {
 	/** e.g. "dir/foo", "dir/foo/hello.md", "" when at repo root */
 	path: string;
 }
-
-/**
- * BlogRequest does not have "ref" info because they are parsed from URL. Ref
- * is only available after fetching, and it is required in some uses (e.g.
- * resolve image src)
- */
-export interface BlogRequestWithRef extends BlogRequest {
-	ref: string;
-}
