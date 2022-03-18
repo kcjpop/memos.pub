@@ -1,13 +1,13 @@
 import { makeBlogPage } from "@/lib/blog/page";
 import { BlogResponse } from "@/lib/blog/type";
-import { BlogGitlabDir } from "../dir";
-import { BlogGitlabRequest } from "../type";
+import { BlogGitLabDir } from "../dir";
+import { BlogGitLabRequest } from "../type";
 
-export interface BlogGitlabPageProps {
-	request: BlogGitlabRequest;
+export interface BlogGitLabPageProps {
+	request: BlogGitLabRequest;
 	response: BlogResponse;
 }
 
-export const BlogGitlabPage = makeBlogPage<BlogGitlabRequest>({
-	BlogDir: BlogGitlabDir,
+export const BlogGitLabPage = makeBlogPage<BlogGitLabRequest>({
+	BlogDir: BlogGitLabDir,
 });

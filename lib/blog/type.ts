@@ -29,15 +29,3 @@ export type BlogResponse = BlogDir | BlogFile | BlogError;
 export interface BlogRequestBase {
 	path: string;
 }
-
-/**
- * Params to get a resource from GitHub
- */
-export interface BlogRequest extends BlogRequestBase {
-	/** e.g. "thien-do" */
-	owner: string;
-	/** e.g. "notes" */
-	repo: string;
-	/** e.g. "dir/foo", "dir/foo/hello.md", "" when at repo root */
-	path: string;
-}

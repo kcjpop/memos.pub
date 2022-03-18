@@ -1,14 +1,14 @@
 import { BlogFile } from "@/lib/blog/type";
 import { compileMdx } from "@/lib/mdx/compile";
-import { resolveBlogGitlabMdxUrl } from "../mdx/url";
-import { BlogGitlabRequest } from "../type";
+import { resolveBlogGitLabMdxUrl } from "../mdx/url";
+import { BlogGitLabRequest } from "../type";
 
 interface Response {
 	content: string;
 }
 
 // https://gitlab.com/api/v4/projects/gitlab-org%2Fgitlab/repository/files/README.md?ref=master
-const fetchContent = async (request: BlogGitlabRequest): Promise<string> => {
+const fetchContent = async (request: BlogGitLabRequest): Promise<string> => {
 	const url = [
 		"https://gitlab.com/api/v4/projects",
 		`/${encodeURIComponent(request.project)}`,
@@ -24,11 +24,11 @@ const fetchContent = async (request: BlogGitlabRequest): Promise<string> => {
 	return content;
 };
 
-export const fetchBlogGitlabFile = async (
-	request: BlogGitlabRequest
+export const fetchBlogGitLabFile = async (
+	request: BlogGitLabRequest
 ): Promise<BlogFile> => {
 	const content = await fetchContent(request);
-	const resolveUrl = resolveBlogGitlabMdxUrl;
+	const resolveUrl = resolveBlogGitLabMdxUrl;
 	const options = { request, resolveUrl };
 	const code = await compileMdx({ content, options });
 	const file: BlogFile = { type: "file", code };

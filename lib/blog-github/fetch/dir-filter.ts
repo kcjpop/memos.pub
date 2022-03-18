@@ -1,4 +1,4 @@
-import { BlogDirEntry } from "../type";
+import { BlogGitHubDirEntry } from "../type";
 
 const isNotNull = <Value>(value: Value | null): value is Value => {
 	if (value === null) return false;
@@ -7,7 +7,7 @@ const isNotNull = <Value>(value: Value | null): value is Value => {
 	return true;
 };
 
-const isValid = (entry: BlogDirEntry): boolean => {
+const isValid = (entry: BlogGitHubDirEntry): boolean => {
 	const { name, type } = entry;
 
 	if (name.startsWith(".")) return false;
@@ -24,8 +24,8 @@ const isValid = (entry: BlogDirEntry): boolean => {
 	}
 };
 
-export const filterBlogDirEntry = (
-	entries: (BlogDirEntry | null)[]
-): BlogDirEntry[] => {
+export const filterBlogGitHubDirEntry = (
+	entries: (BlogGitHubDirEntry | null)[]
+): BlogGitHubDirEntry[] => {
 	return entries.filter(isNotNull).filter(isValid);
 };

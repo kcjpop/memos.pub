@@ -1,11 +1,11 @@
 import Head from "next/head";
-import { BlogRequest } from "../type";
+import { BlogGitHubRequest } from "../type";
 
 interface Props {
-	request: BlogRequest;
+	request: BlogGitHubRequest;
 }
 
-export const BlogFavicon = (props: Props): JSX.Element => (
+export const BlogGitHubFavicon = (props: Props): JSX.Element => (
 	<Head>
 		<link
 			rel="icon"
