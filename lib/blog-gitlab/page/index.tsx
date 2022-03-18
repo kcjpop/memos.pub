@@ -9,9 +9,17 @@ const getDir = (request: BlogGitLabRequest, dir: BlogDir): JSX.Element => (
 	<BlogGitLabDir dir={dir} request={request} />
 );
 
+const getFavicon = (): string => {
+	return "https://gitlab.com/favicon.png";
+};
+
+const getBreadcrumb = (): JSX.Element => <div>breadcrumb</div>;
+
 export const BlogGitLabPage = (props: Props): JSX.Element => (
 	<BlogPage
 		getDir={getDir}
+		getFavicon={getFavicon}
+		getBreadcrumb={getBreadcrumb}
 		request={props.request}
 		response={props.response}
 	/>
