@@ -1,6 +1,7 @@
+import { BlogResponse } from "@/lib/blog/type";
 import { components, operations } from "@octokit/openapi-types";
 import { Octokit } from "octokit";
-import { BlogGitHubRequest, BlogGitHubResponse } from "../type";
+import { BlogGitHubRequest } from "../type";
 import { parseBlogGitHubDir } from "./dir";
 import { parseBlogGitHubError } from "./error";
 import { parseBlogGitHubFile } from "./file";
@@ -15,7 +16,7 @@ type RawResponse =
 const parseResponse = async (
 	request: BlogGitHubRequest,
 	response: RawResponse
-): Promise<BlogGitHubResponse> => {
+): Promise<BlogResponse> => {
 	// Directory
 	if (Array.isArray(response)) {
 		return await parseBlogGitHubDir({ request, response });
@@ -37,7 +38,7 @@ const parseResponse = async (
 
 export const fetchBlogGitHub = async (
 	request: BlogGitHubRequest
-): Promise<BlogGitHubResponse> => {
+): Promise<BlogResponse> => {
 	try {
 		const raw = await octokit.rest.repos.getContent({
 			owner: request.owner,

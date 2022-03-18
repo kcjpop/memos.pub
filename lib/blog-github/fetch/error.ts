@@ -1,4 +1,5 @@
-import { BlogGitHubError, BlogGitHubRequest } from "../type";
+import { BlogError } from "@/lib/blog/type";
+import { BlogGitHubRequest } from "../type";
 
 interface HasStatus {
 	status: number;
@@ -34,7 +35,7 @@ const getMessage = (request: BlogGitHubRequest, error: HasStatus): string => {
 export const parseBlogGitHubError = (
 	request: BlogGitHubRequest,
 	error: unknown
-): BlogGitHubError => {
+): BlogError => {
 	if (hasStatus(error)) {
 		return {
 			type: "error",

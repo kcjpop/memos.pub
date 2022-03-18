@@ -1,20 +1,19 @@
+import { filterBlogDirEntry } from "@/lib/blog/fetch/dir-filter";
+import { findBlogDirReadme } from "@/lib/blog/fetch/dir-readme";
+import { BlogDir, BlogDirEntry } from "@/lib/blog/type";
 import { components } from "@octokit/openapi-types";
 import nodepath from "path";
-import { BlogGitHubDir, BlogGitHubDirEntry, BlogGitHubRequest } from "../type";
-import { filterBlogGitHubDirEntry } from "./dir-filter";
-import { findBlogGitHubDirReadme } from "./dir-readme";
+import { BlogGitHubRequest } from "../type";
 import { fetchBlogGitHub } from "./index";
 
 type RawDir = components["schemas"]["content-directory"];
 type RawDirEntry = RawDir[number];
 
-const ensureDirEntryType = (
-	type: string
-): type is BlogGitHubDirEntry["type"] => {
+const ensureDirEntryType = (type: string): type is BlogDirEntry["type"] => {
 	return ["file", "dir"].includes(type);
 };
 
-const toDirEntry = (raw: RawDirEntry): BlogGitHubDirEntry | null => {
+const toDirEntry = (raw: RawDirEntry): BlogDirEntry | null => {
 	// Just skip unknown file types (submodule, symlink)
 	if (!ensureDirEntryType(raw.type)) return null;
 	return { name: raw.name, type: raw.type };
@@ -22,9 +21,9 @@ const toDirEntry = (raw: RawDirEntry): BlogGitHubDirEntry | null => {
 
 const fetchReadme = async (
 	request: BlogGitHubRequest,
-	entries: BlogGitHubDir["entries"]
-): Promise<BlogGitHubDir["readme"]> => {
-	const readme = findBlogGitHubDirReadme(entries);
+	entries: BlogDir["entries"]
+): Promise<BlogDir["readme"]> => {
+	const readme = findBlogDirReadme(entries);
 	if (readme === null) return null;
 	const path = nodepath.join(request.path, readme.name);
 	const file = await fetchBlogGitHub({ ...request, path });
@@ -37,13 +36,11 @@ interface Props {
 	response: RawDir;
 }
 
-export const parseBlogGitHubDir = async (
-	props: Props
-): Promise<BlogGitHubDir> => {
+export const parseBlogGitHubDir = async (props: Props): Promise<BlogDir> => {
 	const { request, response } = props;
 	const raw = response.map(toDirEntry);
-	const entries = filterBlogGitHubDirEntry(raw);
+	const entries = filterBlogDirEntry(raw);
 	const readme = await fetchReadme(request, entries);
-	const dir: BlogGitHubDir = { type: "dir", entries, readme };
+	const dir: BlogDir = { type: "dir", entries, readme };
 	return dir;
 };

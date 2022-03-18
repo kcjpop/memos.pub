@@ -1,50 +1,18 @@
-import { AppErrorBase } from "@/lib/app/error/base";
-import { BlogGitHubDir, BlogGitHubDirComponent } from "../dir";
-import { BlogGitHubFile } from "../file";
-import { BlogGitHubRequest, BlogGitHubResponse } from "../type";
-import { BlogGitHubBreadcrumb } from "./breadcrumb";
-import { BlogGitHubFavicon } from "./favicon";
+import { BlogPage, BlogPageProps } from "@/lib/blog/page";
+import { BlogDir } from "@/lib/blog/type";
+import { BlogGitHubDir } from "../dir";
+import { BlogGitHubRequest } from "../type";
 
-interface BaseProps<R> {
-	request: R;
-	response: BlogGitHubResponse;
-}
-export type BlogGitHubPageBaseProps<R> = BaseProps<R>;
+type Props = BlogPageProps<BlogGitHubRequest>;
 
-export type BlogGitHubPageProps = BaseProps<BlogGitHubRequest>;
+const getDir = (request: BlogGitHubRequest, dir: BlogDir): JSX.Element => (
+	<BlogGitHubDir dir={dir} request={request} />
+);
 
-type Component<R> = (props: BaseProps<R>) => JSX.Element;
-export type BlogGitHubPageComponent<R> = Component<R>;
-
-interface MakeProps<R> {
-	BlogGitHubDir: BlogGitHubDirComponent<R>;
-}
-
-export const makeBlogGitHubPage = <R,>(props: MakeProps<R>) => {
-	const { BlogGitHubDir } = props;
-	const BlogGitHubPage: Component<R> = (props) => {
-		const { request, response } = props;
-		return (
-			<div>
-				{/* <BlogGitHubFavicon request={request} />
-				<BlogGitHubBreadcrumb request={request} /> */}
-				<div className="mt-16">
-					{response.type === "file" ? (
-						<BlogGitHubFile file={response} />
-					) : response.type === "dir" ? (
-						<BlogGitHubDir request={request} dir={response} />
-					) : (
-						<AppErrorBase title={response.status.toString()}>
-							{response.message}
-						</AppErrorBase>
-					)}
-				</div>
-			</div>
-		);
-	};
-	return BlogGitHubPage;
-};
-
-export const BlogGitHubPage = makeBlogGitHubPage<BlogGitHubRequest>({
-	BlogGitHubDir,
-});
+export const BlogGitHubPage = (props: Props): JSX.Element => (
+	<BlogPage
+		getDir={getDir}
+		request={props.request}
+		response={props.response}
+	/>
+);

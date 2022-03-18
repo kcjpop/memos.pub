@@ -1,13 +1,18 @@
-import { makeBlogPage } from "@/lib/blog/page";
-import { BlogResponse } from "@/lib/blog/type";
+import { BlogPage, BlogPageProps } from "@/lib/blog/page";
+import { BlogDir } from "@/lib/blog/type";
 import { BlogGitLabDir } from "../dir";
 import { BlogGitLabRequest } from "../type";
 
-export interface BlogGitLabPageProps {
-	request: BlogGitLabRequest;
-	response: BlogResponse;
-}
+type Props = BlogPageProps<BlogGitLabRequest>;
 
-export const BlogGitLabPage = makeBlogPage<BlogGitLabRequest>({
-	BlogDir: BlogGitLabDir,
-});
+const getDir = (request: BlogGitLabRequest, dir: BlogDir): JSX.Element => (
+	<BlogGitLabDir dir={dir} request={request} />
+);
+
+export const BlogGitLabPage = (props: Props): JSX.Element => (
+	<BlogPage
+		getDir={getDir}
+		request={props.request}
+		response={props.response}
+	/>
+);

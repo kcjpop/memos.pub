@@ -1,7 +1,8 @@
+import { BlogFile } from "@/lib/blog/type";
 import { compileMdx } from "@/lib/mdx/compile";
 import { components } from "@octokit/openapi-types";
 import { resolveBlogGitHubMdxUrl } from "../mdx/url";
-import { BlogGitHubFile, BlogGitHubRequest } from "../type";
+import { BlogGitHubRequest } from "../type";
 
 type RawFile = components["schemas"]["content-file"];
 
@@ -10,9 +11,7 @@ interface Props {
 	request: BlogGitHubRequest;
 }
 
-export const parseBlogGitHubFile = async (
-	props: Props
-): Promise<BlogGitHubFile> => {
+export const parseBlogGitHubFile = async (props: Props): Promise<BlogFile> => {
 	const { response, request } = props;
 
 	if (!("content" in response)) throw Error("File doesn't have content");
